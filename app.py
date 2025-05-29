@@ -2,7 +2,8 @@ import streamlit as st
 import openai
 import os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Use your API key securely from Streamlit secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="Ask My MBA Tutor", layout="centered")
 
@@ -14,7 +15,7 @@ question = st.text_area("Enter your MBA-related question", height=150)
 if st.button("Ask Tutor") and question.strip():
     with st.spinner("Thinking like a B-school professor..."):
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are a helpful MBA professor with expertise in finance, strategy, and marketing."},
